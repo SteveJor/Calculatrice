@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Calculatrice.MainPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Light={StaticResource Alice}, Dark={StaticResource Deep}}">
+
+    <ContentPage.Resources>
+        <Color x:Key="Platinum">#ECF0F4</Color>
+        <Color x:Key="Charcoal">#2D4150</Color>
+        <Color x:Key="Cyan">#319799</Color>
+        <Color x:Key="Deep">#0A2741</Color>
+        <Color x:Key="Alice">#D0DAE4</Color>
+        <Color x:Key="Coral">#E5606B</Color>
+
+        <Style x:Key="KeyShape" TargetType="Button">
+            <Setter Property="FontSize" Value="26" />
+            <Setter Property="CornerRadius" Value="20" />
+            <Setter Property="Margin" Value="4" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="MinimumHeightRequest" Value="0" />
+            <Setter Property="MinimumWidthRequest" Value="0" />
+        </Style>
+        <Style x:Key="KeyBase" TargetType="Button" BasedOn="{StaticResource KeyShape}">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+        </Style>
+        <Style x:Key="Digit" TargetType="Button" BasedOn="{StaticResource KeyBase}">
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Charcoal}, Dark={StaticResource Platinum}}" />
+        </Style>
+        <Style x:Key="Op" TargetType="Button" BasedOn="{StaticResource KeyBase}">
+            <Setter Property="TextColor" Value="{StaticResource Cyan}" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+        <Style x:Key="Clear" TargetType="Button" BasedOn="{StaticResource KeyBase}">
+            <Setter Property="TextColor" Value="{StaticResource Coral}" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+        <Style x:Key="Equal" TargetType="Button" BasedOn="{StaticResource KeyShape}">
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="Background">
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#4CBDBB" Offset="0" />
+                    <GradientStop Color="{StaticResource Cyan}" Offset="1" />
+                </LinearGradientBrush>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,2*,5*" Padding="0,16,0,0">
+
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Center" Spacing="8">
+            <Border WidthRequest="10" HeightRequest="10" StrokeThickness="0"
+                    StrokeShape="RoundRectangle 5" BackgroundColor="{StaticResource Cyan}"
+                    VerticalOptions="Center" />
+            <Label Text="Calculatrice" FontSize="16" FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light={StaticResource Charcoal}, Dark={StaticResource Platinum}}" />
+        </HorizontalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1" Padding="24,0" VerticalOptions="End" Spacing="4">
+            <Label x:Name="ExprLabel" FontSize="22" HorizontalTextAlignment="End" MaxLines="1"
+                   TextColor="{AppThemeBinding Light={StaticResource Charcoal}, Dark={StaticResource Alice}}" Opacity="0.7" />
+            <Label x:Name="ResultLabel" Text="0" FontSize="56" FontAttributes="Bold"
+                   HorizontalTextAlignment="End" MaxLines="1"
+                   TextColor="{AppThemeBinding Light={StaticResource Deep}, Dark={StaticResource Platinum}}" />
+        </VerticalStackLayout>
+
+        <Border Grid.Row="2" StrokeThickness="0" Padding="12,16,12,12"
+                StrokeShape="RoundRectangle 32,32,0,0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Platinum}, Dark={StaticResource Charcoal}}">
+            <Grid RowDefinitions="*,*,*,*,*" ColumnDefinitions="*,*,*,*">
+                <Button Grid.Row="0" Grid.Column="0" Text="C" Style="{StaticResource Clear}" Clicked="OnClear" />
+                <Button Grid.Row="0" Grid.Column="1" Text="⌫" Style="{StaticResource Op}" Clicked="OnBackspace" />
+                <Button Grid.Row="0" Grid.Column="2" Text="%" Style="{StaticResource Op}" Clicked="OnPercent" />
+                <Button Grid.Row="0" Grid.Column="3" Text="÷" Style="{StaticResource Op}" Clicked="OnOperator" />
+
+                <Button Grid.Row="1" Grid.Column="0" Text="7" Style="{StaticResource Digit}" Clicked="OnDigit" />
+                <Button Grid.Row="1" Grid.Column="1" Text="8" Style="{StaticResource Digit}" Clicked="OnDigit" />
+                <Button Grid.Row="1" Grid.Column="2" Text="9" Style="{StaticResource Digit}" Clicked="OnDigit" />
+                <Button Grid.Row="1" Grid.Column="3" Text="×" Style="{StaticResource Op}" Clicked="OnOperator" />
+
+                <Button Grid.Row="2" Grid.Column="0" Text="4" Style="{StaticResource Digit}" Clicked="OnDigit" />
+                <Button Grid.Row="2" Grid.Column="1" Text="5" Style="{StaticResource Digit}" Clicked="OnDigit" />
+                <Button Grid.Row="2" Grid.Column="2" Text="6" Style="{StaticResource Digit}" Clicked="OnDigit" />
+                <Button Grid.Row="2" Grid.Column="3" Text="−" Style="{StaticResource Op}" Clicked="OnOperator" />
+
+                <Button Grid.Row="3" Grid.Column="0" Text="1" Style="{StaticResource Digit}" Clicked="OnDigit" />
+                <Button Grid.Row="3" Grid.Column="1" Text="2" Style="{StaticResource Digit}" Clicked="OnDigit" />
+                <Button Grid.Row="3" Grid.Column="2" Text="3" Style="{StaticResource Digit}" Clicked="OnDigit" />
+                <Button Grid.Row="3" Grid.Column="3" Text="+" Style="{StaticResource Op}" Clicked="OnOperator" />
+
+                <Button Grid.Row="4" Grid.Column="0" Text="±" Style="{StaticResource Op}" Clicked="OnSign" />
+                <Button Grid.Row="4" Grid.Column="1" Text="0" Style="{StaticResource Digit}" Clicked="OnDigit" />
+                <Button Grid.Row="4" Grid.Column="2" Text="," Style="{StaticResource Digit}" Clicked="OnDecimal" />
+                <Button Grid.Row="4" Grid.Column="3" Text="=" Style="{StaticResource Equal}" Clicked="OnEquals" />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>
